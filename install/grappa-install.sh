@@ -4,6 +4,11 @@
 # License: MIT | https://github.com/community-scripts/ProxmoxVE/raw/main/LICENSE
 # Source: https://github.com/vjt/grappa-irc
 
+# Some unprivileged LXC templates expose /etc/update-motd.d entries whose mode
+# cannot be changed. Make the shared helper's MOTD step best-effort instead of
+# allowing that cosmetic operation to abort the application installation.
+FUNCTIONS_FILE_PATH="$(printf '%s\n' "$FUNCTIONS_FILE_PATH" | sed \
+  's#^[[:space:]]*chmod -x /etc/update-motd.d/\*$#  [[ -d /etc/update-motd.d ]] \&\& chmod -x /etc/update-motd.d/\* 2>/dev/null || true#')"
 source /dev/stdin <<<"$FUNCTIONS_FILE_PATH"
 
 color
