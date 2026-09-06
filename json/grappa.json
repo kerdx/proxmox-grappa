@@ -1,0 +1,76 @@
+{
+  "name": "Grappa",
+  "slug": "grappa",
+  "categories": [22],
+  "date_created": "2026-09-06",
+  "type": "ct",
+  "updateable": true,
+  "privileged": false,
+  "interface_port": 4000,
+  "documentation": "https://github.com/vjt/grappa-irc#readme",
+  "website": "https://github.com/vjt/grappa-irc",
+  "repository": "https://github.com/vjt/grappa-irc",
+  "architectures": ["amd64"],
+  "logo": "https://raw.githubusercontent.com/vjt/grappa-irc/v1.5.1/assets/cicchetto-login.png",
+  "description": "Always-on IRC bouncer with a REST-first API and an irssi-style PWA client.",
+  "install_methods": [
+    {
+      "type": "default",
+      "script": "ct/grappa.sh",
+      "config_path": "/opt/grappa",
+      "resources": {
+        "cpu": 2,
+        "ram": 2048,
+        "hdd": 12,
+        "os": "Debian",
+        "version": "13"
+      }
+    }
+  ],
+  "default_credentials": {
+    "username": null,
+    "password": null
+  },
+  "app_vars": [
+    {
+      "name": "var_phx_host",
+      "label": "Public Hostname",
+      "type": "text",
+      "default": "",
+      "required": false
+    },
+    {
+      "name": "var_grappa_version",
+      "label": "Grappa Release",
+      "type": "text",
+      "default": "v1.5.1",
+      "required": true
+    }
+  ],
+  "notes": [
+    {
+      "text": "Grappa is currently beta/pre-alpha software; test it before using it for production IRC access.",
+      "type": "warning"
+    },
+    {
+      "text": "The installer uses Docker inside an unprivileged LXC and enables nesting, keyctl and mknod support. FUSE remains disabled by default.",
+      "type": "info"
+    },
+    {
+      "text": "Back up the Grappa data and GRAPPA_ENCRYPTION_KEY together; losing the encryption key makes stored upstream credentials unrecoverable.",
+      "type": "warning"
+    },
+    {
+      "text": "For public access, put Grappa behind an HTTPS reverse proxy.",
+      "type": "info"
+    },
+    {
+      "text": "Set Public Hostname to the DNS name used by the reverse proxy. Leaving it blank uses the container IP for LAN access.",
+      "type": "info"
+    },
+    {
+      "text": "Updates are manual and move to the latest stable GitHub release after checking container health.",
+      "type": "info"
+    }
+  ]
+}
