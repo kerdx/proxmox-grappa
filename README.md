@@ -78,3 +78,7 @@ upstream IRC credentials unrecoverable.
 
 For a manual, application-consistent backup, stop Grappa before copying its
 volume. Test a restore on a non-production LXC before relying on the backup.
+
+## License
+
+This project is distributed under the [MIT License](LICENSE).
