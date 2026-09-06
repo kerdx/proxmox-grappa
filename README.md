@@ -7,9 +7,9 @@ tested.
 
 ## Development test
 
-The repository contains the Grappa-specific scripts; the shared ProxmoxVED
-framework is loaded from its official source. From a disposable Proxmox node,
-run the following as `root`:
+The repository contains the Grappa-specific scripts; the shared Proxmox VE
+Community Scripts framework is loaded from its official source. From a
+disposable Proxmox node, run the following as `root`:
 
 ```sh
 var_phx_host=192.168.1.50 \

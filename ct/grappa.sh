@@ -8,26 +8,26 @@
 # and promoted by the community-scripts maintainers.
 
 GRAPPA_SCRIPT_URL="${GRAPPA_SCRIPT_URL:-https://raw.githubusercontent.com/kerdx/proxmox-grappa/main}"
-PROXMOXVED_URL="${PROXMOXVED_URL:-https://git.community-scripts.org/community-scripts/ProxmoxVED/raw/branch/main}"
+PROXMOXVE_URL="${PROXMOXVE_URL:-${PROXMOXVED_URL:-https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main}}"
 GRAPPA_SCRIPT_ROOT="$(mktemp -d)"
-mkdir -p "${GRAPPA_SCRIPT_ROOT}/misc" "${GRAPPA_SCRIPT_ROOT}/install"
+mkdir -p "${GRAPPA_SCRIPT_ROOT}/misc"
 
-if ! curl -fsSL "${PROXMOXVED_URL}/misc/build.func" \
+if ! curl -fsSL "${PROXMOXVE_URL}/misc/build.func" \
   -o "${GRAPPA_SCRIPT_ROOT}/misc/build.func"; then
-  echo "Unable to download the ProxmoxVED framework." >&2
+  echo "Unable to download the Proxmox VE Community Scripts framework." >&2
   exit 1
 fi
 
-if ! curl -fsSL "${GRAPPA_SCRIPT_URL}/install/grappa-install.sh" \
-  -o "${GRAPPA_SCRIPT_ROOT}/install/grappa-install.sh"; then
-  echo "Unable to download the Grappa installer." >&2
-  exit 1
-fi
+# The legacy ProxmoxVE build helper hard-codes its installer origin. Redirect
+# only that path so the shared framework still comes from the official source.
+sed -i \
+  's|https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/install/|${GRAPPA_SCRIPT_URL}/install/|g' \
+  "${GRAPPA_SCRIPT_ROOT}/misc/build.func"
 
-trap 'rm -rf "$GRAPPA_SCRIPT_ROOT"' EXIT
+trap 'rm -rf "$GRAPPA_SCRIPT_ROOT"' EXIT 
 
-export COMMUNITY_SCRIPTS_URL="$PROXMOXVED_URL"
-export COMMUNITY_SCRIPTS_ROOT="$GRAPPA_SCRIPT_ROOT"
+export GRAPPA_SCRIPT_URL
+export COMMUNITY_SCRIPTS_URL="$PROXMOXVE_URL"
 source "${GRAPPA_SCRIPT_ROOT}/misc/build.func"
 
 APP="Grappa"
