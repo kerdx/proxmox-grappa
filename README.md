@@ -5,6 +5,25 @@ Development version of a Proxmox VE Helper-Script for
 developed in ProxmoxVED first; this code is not yet submitted or production
 tested.
 
+## Development test
+
+The repository contains the Grappa-specific scripts; the shared ProxmoxVED
+framework is loaded from its official source. From a disposable Proxmox node,
+run the following as `root`:
+
+```sh
+var_phx_host=192.168.1.50 \
+var_grappa_version=v1.5.1 \
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/kerdx/proxmox-grappa/main/ct/grappa.sh)"
+```
+
+Replace the address with the LXC IP or public hostname. To test another branch
+of this repository, export `GRAPPA_SCRIPT_URL` before running the command:
+
+```sh
+export GRAPPA_SCRIPT_URL="https://raw.githubusercontent.com/kerdx/proxmox-grappa/<branch>"
+```
+
 ## What it deploys
 
 - An unprivileged Debian 13 LXC with Docker, nesting, keyctl and mknod.
