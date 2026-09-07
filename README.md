@@ -13,6 +13,14 @@ disposable Proxmox node, run the following as `root`:
 
 ```sh
 var_phx_host=192.168.1.50 \
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/kerdx/proxmox-grappa/main/ct/grappa.sh)"
+```
+
+The installer resolves the latest stable Grappa release automatically. To pin a specific
+release for a reproducible test, set `var_grappa_version` explicitly:
+
+```sh
+var_phx_host=192.168.1.50 \
 var_grappa_version=v1.5.1 \
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/kerdx/proxmox-grappa/main/ct/grappa.sh)"
 ```
@@ -27,9 +35,9 @@ export GRAPPA_SCRIPT_URL="https://raw.githubusercontent.com/kerdx/proxmox-grappa
 ## What it deploys
 
 - An unprivileged Debian 13 LXC with Docker, nesting, keyctl and mknod.
-- Grappa `v1.5.1` by default, pinned both for the bootstrap code and the OCI
-  image. A different valid release tag can be supplied through
-  `var_grappa_version`.
+- The latest stable Grappa release at installation time, resolved from GitHub for
+  both the bootstrap code and the OCI image. A specific valid release tag can be
+  pinned through `var_grappa_version`.
 - The application state in the `grappa-data` Docker volume and its production
   environment in `/opt/grappa/grappa.env`.
 - Helper-Script state in `/opt/grappa/grappa-helper.env`, including the
