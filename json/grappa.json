@@ -43,7 +43,7 @@
       "name": "var_grappa_version",
       "label": "Grappa Release",
       "type": "text",
-      "default": "v1.5.1",
+      "default": "latest",
       "required": true
     }
   ],

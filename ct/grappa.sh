@@ -32,7 +32,7 @@ source "${GRAPPA_SCRIPT_ROOT}/misc/build.func"
 
 APP="Grappa"
 GRAPPA_REPOSITORY="vjt/grappa-irc"
-GRAPPA_DEFAULT_VERSION="v1.5.1"
+GRAPPA_DEFAULT_VERSION="latest"
 GRAPPA_HOME="/opt/grappa"
 GRAPPA_HELPER_ENV="${GRAPPA_HOME}/grappa-helper.env"
 

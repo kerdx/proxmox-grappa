@@ -23,10 +23,16 @@ GRAPPA_ROOT="/opt/grappa"
 GRAPPA_HELPER_ENV="${GRAPPA_ROOT}/grappa-helper.env"
 GRAPPA_CONTAINER="grappa"
 GRAPPA_PUBLISH="${GRAPPA_PUBLISH:-0.0.0.0:4000}"
-GRAPPA_VERSION="${var_grappa_version:-v1.5.1}"
+GRAPPA_VERSION="${var_grappa_version:-latest}"
 
 function valid_grappa_version() {
   [[ "$1" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([-.][0-9A-Za-z]+)*$ ]]
+}
+
+function latest_grappa_version() {
+  curl -fsSL "https://api.github.com/repos/${GRAPPA_REPOSITORY}/releases/latest" \
+    | sed -n 's/^[[:space:]]*"tag_name": "\([^"]*\)".*/\1/p' \
+    | head -n 1
 }
 
 function valid_phx_host() {
@@ -45,8 +51,13 @@ function fail_unhealthy_grappa() {
   exit 1
 }
 
+if [[ "$GRAPPA_VERSION" == "latest" ]]; then
+  msg_info "Resolving the latest Grappa release"
+  GRAPPA_VERSION="$(latest_grappa_version)"
+fi
+
 if ! valid_grappa_version "$GRAPPA_VERSION"; then
-  msg_error "Invalid Grappa version '${GRAPPA_VERSION}'. Use a release tag such as v1.5.1."
+  msg_error "Could not determine a valid Grappa release. Set var_grappa_version to a tag such as v1.5.1 to pin one."
   exit 1
 fi
 
