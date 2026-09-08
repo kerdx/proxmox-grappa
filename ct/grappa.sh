@@ -144,7 +144,7 @@ function update_script() {
   export GRAPPA_IMAGE="ghcr.io/vjt/grappa:${latest_version}"
 
   cd "$GRAPPA_HOME" || exit 1
-  bash "$bootstrap_script" -s -- update
+  bash "$bootstrap_script" update
 
   if ! grappa_is_healthy; then
     fail_unhealthy_grappa
